@@ -1,0 +1,168 @@
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --tangerine: #FF6A2B;
+  --magenta:   #EC2C82;
+  --violet:    #7A3CF0;
+  --cobalt:    #2563EB;
+  --teal:      #0FB5A6;
+  --sun:       #FFC233;
+  --ink:       #1B1230;
+  --ink-soft:  #574a6e;
+  --paper:     #FAF6EF;
+  --panel:     #FFFFFF;
+
+  --shadow:    18px 18px 0 rgba(27,18,48,0.08);
+  --shadow-sm:  4px  4px 0 var(--ink);
+  --radius:    22px;
+  --sat:       1;
+
+  --font-display: var(--font-bricolage, 'Bricolage Grotesque', system-ui, sans-serif);
+  --font-body:    var(--font-atkinson, 'Atkinson Hyperlegible', Georgia, serif);
+}
+
+/* Calm mode — desaturate palette, freeze all motion */
+body.calm {
+  --sat: 0.62;
+}
+body.calm * {
+  animation-duration:   0s !important;
+  transition-duration:  0s !important;
+}
+
+/* Honour OS-level reduced motion even without Calm toggle */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration:  0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior:     auto  !important;
+  }
+}
+
+/* ─── Base reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family:      var(--font-body);
+  background-color: var(--paper);
+  color:            var(--ink);
+  line-height:      1.65;
+  -webkit-font-smoothing: antialiased;
+  filter: saturate(var(--sat));
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--violet);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--magenta);
+}
+
+/* ─── Focus ring (accessibility first) ──────────────────────────────────── */
+:focus-visible {
+  outline:        3px dashed var(--violet);
+  outline-offset: 3px;
+  border-radius:  4px;
+}
+
+/* ─── Typography scale ───────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family:     var(--font-display);
+  font-weight:     800;
+  letter-spacing:  -0.02em;
+  line-height:     1.1;
+  color:           var(--ink);
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
+h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); }
+h3 { font-size: clamp(1.15rem, 2vw, 1.4rem); font-weight: 600; }
+
+p {
+  max-width: 62ch;
+}
+
+/* ─── Layout helpers ─────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.5em;
+  font-family:     var(--font-display);
+  font-weight:     600;
+  font-size:       1rem;
+  line-height:     1;
+  padding:         0.8em 1.6em;
+  border-radius:   999px;
+  border:          2.5px solid var(--ink);
+  cursor:          pointer;
+  text-decoration: none;
+  transition:      transform 120ms ease, box-shadow 120ms ease;
+  box-shadow:      var(--shadow-sm);
+  user-select:     none;
+}
+.btn:hover, .btn:focus-visible {
+  transform:  translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.btn:active {
+  transform:  translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.btn-primary {
+  background-color: var(--ink);
+  color:            var(--paper);
+}
+.btn-primary:hover {
+  color: var(--paper);
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────────────── */
+.card {
+  background:    var(--panel);
+  border:        2.5px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow:    var(--shadow);
+  padding:       2rem;
+}
+
+/* ─── Pill badge ─────────────────────────────────────────────────────────── */
+.pill {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.4em;
+  font-family:     var(--font-display);
+  font-weight:     600;
+  font-size:       0.82rem;
+  letter-spacing:  0.01em;
+  padding:         0.35em 0.9em;
+  border-radius:   999px;
+  border:          2px solid currentColor;
+}

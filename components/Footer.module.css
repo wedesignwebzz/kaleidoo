@@ -1,0 +1,38 @@
+.footer {
+  border-top:    2.5px solid var(--ink);
+  padding-block: 2.5rem;
+  background:    var(--paper);
+}
+
+.inner {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.75rem;
+}
+
+.desc {
+  font-size:  0.9rem;
+  color:      var(--ink-soft);
+  max-width:  60ch;
+}
+
+.meta {
+  display:     flex;
+  flex-wrap:   wrap;
+  align-items: center;
+  gap:         0.5rem;
+  font-size:   0.85rem;
+  color:       var(--ink-soft);
+}
+
+.meta a {
+  color: var(--ink-soft);
+}
+.meta a:hover {
+  color: var(--violet);
+}
+
+.dev {
+  font-style: italic;
+  opacity:    0.7;
+}

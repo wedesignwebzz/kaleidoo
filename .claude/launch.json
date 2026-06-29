@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kaleidoo-dev",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "C:\\Users\\Test Computer\\Desktop\\Claude Temp Homepage\\dev.cmd"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
