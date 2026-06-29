@@ -3,7 +3,7 @@
 import { useState, useId } from "react";
 import styles from "./WaitlistForm.module.css";
 
-type Interest = "talent" | "employer" | "both";
+type Interest = "talent" | "employer" | "both" | "investor";
 
 export default function WaitlistForm() {
   const uid = useId();
@@ -61,6 +61,7 @@ export default function WaitlistForm() {
     { value: "talent",   label: "Talent" },
     { value: "employer", label: "Employer" },
     { value: "both",     label: "Both" },
+    { value: "investor", label: "Investor" },
   ];
 
   return (

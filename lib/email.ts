@@ -101,25 +101,31 @@ async function resendAddToAudience(data: SignupData) {
 /* ─── Gmail / Nodemailer implementation ──────────────────────────────────── */
 
 async function gmailNotify(data: SignupData) {
-  const nodemailer = await import("nodemailer");
+  const nodemailerMod = await import("nodemailer");
+  /* Handle both CJS default-export and ESM namespace shapes */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const nodemailer = (nodemailerMod as any).default ?? nodemailerMod;
+
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  const notifyEmail = process.env.NOTIFY_EMAIL ?? "kaleidoojobsearch@gmail.com";
+
+  console.log("[email] gmailNotify — user:", user, "notifyEmail:", notifyEmail);
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD, // App Password — not your normal password
-    },
+    auth: { user, pass },
   });
 
-  const notifyEmail = process.env.NOTIFY_EMAIL ?? "kaleidoojobsearch@gmail.com";
-
-  await transporter.sendMail({
-    from: `Kaleidoo Waitlist <${process.env.GMAIL_USER}>`,
+  const info = await transporter.sendMail({
+    from: `Kaleidoo Waitlist <${user}>`,
     to: notifyEmail,
     subject: `New Kaleidoo waitlist signup — ${data.email}`,
     text: notifyBody(data),
     html: notifyHtml(data),
   });
+
+  console.log("[email] gmail sent — messageId:", info.messageId);
 }
 
 /* Gmail mode skips audience — no Resend account needed */

@@ -94,7 +94,9 @@ export async function POST(req: NextRequest) {
   const name = sanitiseString(body.name);
   const raw = sanitiseString(body.interest);
   const interest =
-    raw === "talent" || raw === "employer" || raw === "both" ? raw : undefined;
+    raw === "talent" || raw === "employer" || raw === "both" || raw === "investor"
+      ? raw
+      : undefined;
 
   const timestamp = new Date().toISOString();
   const signupData = { email, name, interest, timestamp };
