@@ -31,8 +31,8 @@ async function maybeInsertDb(data: {
   if (!url) return;
 
   try {
-    /* Dynamic import so the build doesn't fail if the driver isn't installed */
-    const { default: postgres } = await import("postgres" as string);
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+    const postgres = require("postgres");
     const sql = postgres(url, { max: 1 });
 
     await sql`
