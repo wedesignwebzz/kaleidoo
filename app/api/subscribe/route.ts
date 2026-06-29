@@ -110,12 +110,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  /* Send notification email (non-blocking failure — audience is source of truth) */
+  /* Send notification email.
+     For Resend: non-fatal — the audience is the source of truth.
+     For Gmail:  fatal — email is the only store, so surface the error. */
+  const provider = (process.env.EMAIL_PROVIDER ?? "resend").toLowerCase();
   try {
     await notifyNewSignup(signupData);
   } catch (err) {
-    console.error("[waitlist] notifyNewSignup failed (non-fatal):", err);
-    /* Don't fail the request — the contact is already in the audience */
+    console.error("[waitlist] notifyNewSignup failed:", err);
+    if (provider === "gmail") {
+      return NextResponse.json(
+        { ok: false, error: "We couldn't send your signup — please try again shortly." },
+        { status: 500 }
+      );
+    }
+    /* Resend mode: log and continue — contact is already in the audience */
   }
 
   /* Optional DB backup (fully non-blocking) */
